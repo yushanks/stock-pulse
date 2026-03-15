@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式アナライザー | 割安成長株スクリーナー</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-inner">
+                <div class="logo">
+                    <span class="logo-icon">📊</span>
+                    <h1>StockPulse</h1>
+                    <span class="logo-sub">割安成長株スクリーナー</span>
+                </div>
+                <div class="header-actions">
+                    <div class="market-toggle">
+                        <button class="market-btn active" data-market="JP">🇯🇵 日本株</button>
+                        <button class="market-btn" data-market="US">🇺🇸 米国株</button>
+                    </div>
+                    <button id="scanBtn" class="scan-btn">
+                        <span class="scan-icon">⚡</span>
+                        スキャン開始
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="themes-section" id="themesSection">
+                <h2 class="section-title">注目テーマ・社会情勢</h2>
+                <div class="themes-grid" id="themesGrid"></div>
+            </section>
+
+            <section class="scan-section">
+                <div class="scan-status" id="scanStatus">
+                    <div class="status-idle">
+                        <p>市場をスキャンして、<strong>割安で高成長が期待できる銘柄</strong>を自動で発見します。</p>
+                        <p class="status-sub">「スキャン開始」ボタンを押してください（分析に1〜2分かかります）</p>
+                    </div>
+                </div>
+
+                <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">市場をスキャンしています...</p>
+                        <p class="loading-sub" id="loadingProgress">銘柄データを取得・分析中</p>
+                    </div>
+                </div>
+
+                <div class="results-header" id="resultsHeader" style="display:none;">
+                    <h2 class="section-title">スキャン結果</h2>
+                    <div class="results-meta">
+                        <span id="resultCount"></span>
+                        <span id="scanTime"></span>
+                    </div>
+                    <div class="filter-bar">
+                        <button class="filter-btn active" data-filter="all">すべて</button>
+                        <button class="filter-btn" data-filter="strong-buy">強い買い</button>
+                        <button class="filter-btn" data-filter="buy">買い</button>
+                        <button class="filter-btn" data-filter="value">割安</button>
+                        <button class="filter-btn" data-filter="growth">高成長</button>
+                    </div>
+                </div>
+
+                <div class="results-grid" id="resultsGrid"></div>
+            </section>
+
+            <div class="modal-overlay" id="modalOverlay" style="display:none;">
+                <div class="modal" id="stockModal">
+                    <button class="modal-close" id="modalClose">&times;</button>
+                    <div class="modal-content" id="modalContent"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>⚠️ 本ツールは情報提供を目的としており、投資助言ではありません。投資判断は自己責任でお願いいたします。</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
